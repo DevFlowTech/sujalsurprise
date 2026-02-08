@@ -346,6 +346,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // 2. Fallback: Play on first interaction (if autoplay failed)
+    document.addEventListener(
+      "click",
+      () => {
+        if (audio.paused) {
+          audio
+            .play()
+            .then(() => {
+              playBtn.textContent = "⏸";
+              songInfo.textContent = "Playing...";
+            })
+            .catch((e) => console.log("Still waiting for interaction"));
+        }
+      },
+      { once: true },
+    );
+
     // 2. Play/Pause Toggle Button
     playBtn.addEventListener("click", () => {
       if (audio.paused) {
