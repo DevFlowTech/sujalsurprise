@@ -323,4 +323,43 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "final.html";
     }, 2000);
   });
+
+  /* ==========================================================================
+     7. FLOATING MUSIC PLAYER
+     ========================================================================== */
+  const playBtn = document.getElementById("play-btn");
+  const audio = document.getElementById("bg-music");
+  const songInfo = document.querySelector(".song-info div:last-child");
+  let isPlaying = false;
+
+  if (playBtn && audio) {
+    playBtn.addEventListener("click", () => {
+      if (!audio.src || audio.src === window.location.href + "#") {
+        alert(
+          "Add a song file to the 'assets' folder and update the src in index.html! 🎵",
+        );
+        return;
+      }
+
+      if (isPlaying) {
+        audio.pause();
+        playBtn.textContent = "▶";
+        songInfo.textContent = "Click to Play";
+      } else {
+        audio
+          .play()
+          .then(() => {
+            playBtn.textContent = "⏸";
+            songInfo.textContent = "Playing...";
+          })
+          .catch((e) => {
+            console.log("Audio play failed:", e);
+            alert(
+              "Please interact with the document first or check audio file path.",
+            );
+          });
+      }
+      isPlaying = !isPlaying;
+    });
+  }
 });

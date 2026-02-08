@@ -437,3 +437,48 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/* ==========================================================================
+   FLOATING MUSIC PLAYER
+   ========================================================================== */
+.music-player {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--white);
+  border: var(--chunky-border);
+  box-shadow: var(--bubble-shadow);
+  padding: 15px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.music-player:hover {
+  transform: scale(1.05);
+}
+
+.play-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--vibrant-pink);
+  border: 2px solid var(--comic-black);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.song-info {
+  font-family: var(--font-comic);
+  font-size: 0.9rem;
+  padding-right: 10px;
+} 
+ 
+ 

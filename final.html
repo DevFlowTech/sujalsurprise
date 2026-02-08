@@ -138,75 +138,110 @@
         display: inline-block;
       }
 
-      /* Film Strip Section */
-      .film-wrap {
+      /* Modern "Then vs Now" Section */
+      .ba-section {
         width: 100%;
-        padding: 50px 0;
-        position: relative;
-        z-index: 5;
-        background: rgba(255, 255, 255, 0.4);
-        border-top: var(--chunky-border);
-        border-bottom: var(--chunky-border);
-        overflow: hidden;
-      }
-
-      .film-strip {
+        padding: 40px 20px 100px;
         display: flex;
-        width: fit-content;
-        animation: scrollRoll 40s linear infinite;
+        flex-direction: column;
+        align-items: center;
+        gap: 80px;
+        z-index: 5;
       }
 
-      @keyframes scrollRoll {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(-50%);
-        }
-      }
-
-      .film-strip:hover {
-        animation-play-state: paused;
-      }
-
-      .photo-card {
-        flex: 0 0 280px;
-        height: 380px;
-        margin: 0 25px;
-        background: var(--white);
+      .comparison-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        padding: 40px;
+        border-radius: 30px;
         border: var(--chunky-border);
-        box-shadow: 8px 8px 0px var(--comic-black);
-        padding: 15px 15px 50px 15px;
+        box-shadow: var(--bubble-shadow);
+        width: 100%;
+        max-width: 1000px;
         position: relative;
-        transform: rotate(var(--r));
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border-radius: 10px;
+        transition: transform 0.3s ease;
       }
 
-      .photo-card:hover {
-        transform: rotate(0deg) translateY(-20px) scale(1.05);
-        z-index: 100;
-        box-shadow: 15px 15px 0px var(--comic-black);
+      .comparison-row:hover {
+        transform: translateY(-5px);
+        box-shadow: 12px 12px 0px var(--comic-black);
       }
 
-      .photo-card img {
+      .img-wrapper {
+        position: relative;
+        width: 45%;
+        aspect-ratio: 3/4;
+        border-radius: 15px;
+        overflow: hidden;
+        border: 3px solid var(--comic-black);
+        box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .img-wrapper:hover {
+        transform: scale(1.03) rotate(1deg);
+      }
+
+      .img-wrapper img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 5px;
-        border: 2px solid var(--comic-black);
       }
 
-      .photo-caption {
+      .label-badge {
         position: absolute;
-        bottom: 15px;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        font-family: "Dancing Script", cursive;
-        font-size: 1.5rem;
+        top: 15px;
+        left: 15px;
+        background: var(--vibrant-pink);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-family: var(--font-comic);
+        font-size: 1.1rem;
+        border: 2px solid var(--comic-black);
+        box-shadow: 2px 2px 0px var(--comic-black);
+        z-index: 10;
+      }
+
+      .label-badge.now {
+        background: #a7f3d0; /* Pastel Green */
         color: var(--comic-black);
-        font-weight: 700;
+        right: 15px;
+        left: auto;
+      }
+
+      .arrow-divider {
+        font-size: 3rem;
+        color: var(--comic-black);
+        background: var(--white);
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 3px solid var(--comic-black);
+        z-index: 2;
+        flex-shrink: 0;
+      }
+
+      .row-title {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-2deg);
+        background: var(--soft-yellow);
+        padding: 10px 30px;
+        border: var(--chunky-border);
+        border-radius: 50px;
+        font-family: var(--font-comic);
+        font-size: 1.5rem;
+        white-space: nowrap;
+        z-index: 20;
       }
 
       /* Quote Section */
@@ -257,6 +292,28 @@
         pointer-events: none;
       }
 
+      @media (max-width: 768px) {
+        .comparison-row {
+          flex-direction: column;
+          gap: 20px;
+          padding: 50px 20px 30px;
+        }
+
+        .img-wrapper {
+          width: 100%;
+          aspect-ratio: 1; /* Square on mobile */
+        }
+
+        .arrow-divider {
+          transform: rotate(90deg);
+        }
+
+        .row-title {
+          font-size: 1.2rem;
+          width: 90%;
+        }
+      }
+
       @media (max-width: 600px) {
         .photo-card {
           flex: 0 0 220px;
@@ -268,6 +325,227 @@
         }
         .quote-box {
           padding: 20px 30px;
+        }
+      }
+
+      /* --- NEW FEATURES CSS --- */
+
+      /* 1. Timeline Section */
+      .timeline-section {
+        width: 100%;
+        max-width: 800px;
+        position: relative;
+        padding: 50px 20px;
+        margin-bottom: 80px;
+      }
+
+      .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--comic-black);
+        transform: translateX(-50%);
+        border-radius: 4px;
+        z-index: 1;
+      }
+
+      .timeline-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 60px;
+        position: relative;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease-out;
+      }
+
+      .timeline-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .timeline-dot {
+        width: 24px;
+        height: 24px;
+        background: var(--vibrant-pink);
+        border: 4px solid var(--white);
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 5;
+        box-shadow: 0 0 0 4px var(--comic-black);
+      }
+
+      .timeline-content {
+        width: 45%;
+        background: var(--white);
+        padding: 20px;
+        border-radius: 15px;
+        border: var(--chunky-border);
+        box-shadow: 6px 6px 0px var(--comic-black);
+        position: relative;
+        z-index: 2;
+      }
+
+      .timeline-item:nth-child(odd) {
+        justify-content: flex-start;
+      }
+      .timeline-item:nth-child(even) {
+        justify-content: flex-end;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content {
+        margin-right: auto;
+      }
+      .timeline-item:nth-child(even) .timeline-content {
+        margin-left: auto;
+      }
+
+      /* 2. Reasons Grid (Flip Cards) */
+      .reasons-section {
+        margin-bottom: 100px;
+        text-align: center;
+      }
+
+      .section-title {
+        font-family: var(--font-comic);
+        font-size: 2.5rem;
+        background: var(--soft-yellow);
+        display: inline-block;
+        padding: 10px 30px;
+        border: var(--chunky-border);
+        box-shadow: var(--bubble-shadow);
+        border-radius: 20px;
+        margin-bottom: 40px;
+        transform: rotate(-1deg);
+      }
+
+      .reasons-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 30px;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .flip-card {
+        background-color: transparent;
+        width: 100%;
+        aspect-ratio: 3/4;
+        perspective: 1000px;
+        cursor: pointer;
+      }
+
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      /* Fallback for touch devices */
+      .flip-card.flipped .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border: var(--chunky-border);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.1);
+      }
+
+      .flip-card-front {
+        background-color: var(--soft-pink);
+        color: var(--comic-black);
+      }
+
+      .flip-card-back {
+        background-color: var(--white);
+        color: var(--comic-black);
+        transform: rotateY(180deg);
+        padding: 15px;
+        font-family: var(--font-comic);
+        font-size: 1.2rem;
+        line-height: 1.4;
+      }
+
+      /* 3. Floating Music Player */
+      .music-player {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--white);
+        border: var(--chunky-border);
+        box-shadow: var(--bubble-shadow);
+        padding: 15px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+      }
+
+      .music-player:hover {
+        transform: scale(1.05);
+      }
+
+      .play-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--vibrant-pink);
+        border: 2px solid var(--comic-black);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+
+      .song-info {
+        font-family: var(--font-comic);
+        font-size: 0.9rem;
+        padding-right: 10px;
+      }
+
+      /* Mobile Timeline Adjustments */
+      @media (max-width: 700px) {
+        .timeline-line {
+          left: 20px;
+        }
+        .timeline-item {
+          justify-content: flex-start !important;
+          padding-left: 50px;
+        }
+        .timeline-content {
+          width: 100% !important;
+          margin: 0 !important;
+        }
+        .timeline-dot {
+          left: 20px;
         }
       }
     </style>
@@ -287,10 +565,193 @@
       <h1>For You, Sujal</h1>
     </div>
 
-    <div class="film-wrap">
-      <div class="film-strip" id="film-strip">
-        <!-- Photos Loaded via JS -->
+    <div class="ba-section">
+      <!-- Row 1 -->
+      <div class="comparison-row">
+        <div class="row-title">The First Look 🥺</div>
+
+        <div class="img-wrapper">
+          <span class="label-badge">Then</span>
+          <img src="couple_imgs/before-1.jpeg" alt="Before" />
+        </div>
+
+        <div class="arrow-divider">➜</div>
+
+        <div class="img-wrapper">
+          <span class="label-badge now">Now</span>
+          <img src="couple_imgs/after-1.jpeg" alt="After" />
+        </div>
       </div>
+
+      <!-- Row 2 -->
+      <div class="comparison-row">
+        <div
+          class="row-title"
+          style="
+            transform: translateX(-50%) rotate(2deg);
+            background: var(--soft-pink);
+          "
+        >
+          Look At Us Now 🥰
+        </div>
+
+        <div class="img-wrapper">
+          <span class="label-badge">Then</span>
+          <img src="couple_imgs/before-2.jpeg" alt="Before" />
+        </div>
+
+        <div class="arrow-divider">➜</div>
+
+        <div class="img-wrapper">
+          <span class="label-badge now">Now</span>
+          <img src="couple_imgs/after-2.jpeg" alt="After" />
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="comparison-row">
+        <div class="row-title" style="background: #e9d5ff">
+          Glowing Up Together ✨
+        </div>
+
+        <div class="img-wrapper">
+          <span class="label-badge">Then</span>
+          <img src="couple_imgs/before-3.jpeg" alt="Before" />
+        </div>
+
+        <div class="arrow-divider">➜</div>
+
+        <div class="img-wrapper">
+          <span class="label-badge now">Now</span>
+          <img src="couple_imgs/after-3.jpeg" alt="After" />
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-section">
+      <div class="timeline-line"></div>
+
+      <!-- Milestone 1 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3 style="font-family: var(--font-comic); margin-bottom: 5px">
+            How It Started
+          </h3>
+          <p>
+            That first day we met, I knew there was something special about you.
+          </p>
+        </div>
+      </div>
+
+      <!-- Milestone 2 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3 style="font-family: var(--font-comic); margin-bottom: 5px">
+            First Date
+          </h3>
+          <p>
+            Coffee, laughter, and that moment I realized I didn't want to leave.
+          </p>
+        </div>
+      </div>
+
+      <!-- Milestone 3 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3 style="font-family: var(--font-comic); margin-bottom: 5px">
+            The "Yes"
+          </h3>
+          <p>Making it official was the easiest decision of my life.</p>
+        </div>
+      </div>
+
+      <!-- Milestone 4 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3 style="font-family: var(--font-comic); margin-bottom: 5px">
+            Now & Forever
+          </h3>
+          <p>
+            Every day since has been an adventure I wouldn't trade for the
+            world.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reasons Grid -->
+    <div class="reasons-section">
+      <h2 class="section-title">Why I Love You ❤️</h2>
+      <div class="reasons-grid">
+        <!-- Card 1 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span style="font-size: 3rem">✨</span>
+              <h3>Reason #1</h3>
+            </div>
+            <div class="flip-card-back">
+              <p>Your smile lights up my entire world, even on dark days.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span style="font-size: 3rem">🫂</span>
+              <h3>Reason #2</h3>
+            </div>
+            <div class="flip-card-back">
+              <p>You give the best hugs that make me feel so safe.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span style="font-size: 3rem">😂</span>
+              <h3>Reason #3</h3>
+            </div>
+            <div class="flip-card-back">
+              <p>You get my weird jokes when no one else does.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span style="font-size: 3rem">💪</span>
+              <h3>Reason #4</h3>
+            </div>
+            <div class="flip-card-back">
+              <p>You support my dreams and push me to be better.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player">
+      <div class="play-btn" id="play-btn">▶</div>
+      <div class="song-info">
+        <div>Our Song 🎵</div>
+        <div style="font-size: 0.7rem; opacity: 0.7">Click to Play</div>
+      </div>
+      <audio id="bg-music" loop>
+        <source src="#" type="audio/mp3" />
+        <!-- User needs to add src -->
+      </audio>
     </div>
 
     <div class="quote-wrap">
@@ -316,47 +777,6 @@
     </div>
 
     <script>
-      const strip = document.getElementById("film-strip");
-      const numPhotos = 20;
-
-      const photoCaptions = [
-        "Pure Happiness ✨",
-        "Me & You ❤️",
-        "That Smile! 😊",
-        "Perfect Day 📸",
-        "My Favorite 💖",
-        "Forever Us 💍",
-        "Sweet Memories 🍬",
-        "Only You 🌙",
-        "Better Together 👩‍❤️‍👨",
-        "My Whole World 🌎",
-        "Simply Cute 🌸",
-        "Infinity Love ♾️",
-        "Best Person 🏆",
-        "Stay Forever 🥺",
-        "Loving You 🌹",
-        "My Heartbeat 💓",
-        "Greatest Gift 🎁",
-        "Magic Moments ✨",
-        "True Love 💘",
-        "Soulmate ❤️",
-      ];
-
-      function loadPhotos() {
-        let content = "";
-        for (let i = 1; i <= numPhotos; i++) {
-          const rotation = (Math.random() * 8 - 4).toFixed(1);
-          content += `
-                    <div class="photo-card" style="--r: ${rotation}deg">
-                        <img src="couple_imgs/${i}.jpeg" alt="Memory" loading="lazy">
-                        <div class="photo-caption">${photoCaptions[i - 1] || "Moment #" + i}</div>
-                    </div>
-                `;
-        }
-        strip.innerHTML = content + content; // Duplicate for seamless scroll
-      }
-      loadPhotos();
-
       // Quote Rotation
       let currentQuote = 0;
       const boxes = document.querySelectorAll(".quote-box");
@@ -403,6 +823,81 @@
         }
       }
 
+      /* --- NEW JS FUNCTIONALITY --- */
+
+      // 1. Timeline Scroll Animation
+      const observerOptions = {
+        threshold: 0.2,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".timeline-item").forEach((item) => {
+        observer.observe(item);
+      });
+
+      // 2. Parallax Effect for Blobs
+      window.addEventListener("scroll", () => {
+        const scrolled = window.scrollY;
+        const blobs = document.querySelectorAll(".blob");
+
+        blobs.forEach((blob, index) => {
+          const speed = (index + 1) * 0.1;
+          blob.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+      });
+
+      // 3. Music Player Logic
+      const playBtn = document.getElementById("play-btn");
+      const audio = document.getElementById("bg-music");
+      const songInfo = document.querySelector(".song-info div:last-child");
+      let isPlaying = false;
+
+      // Note: Auto-play usually blocked by browsers until interaction
+      playBtn.addEventListener("click", () => {
+        if (!audio.src || audio.src === window.location.href + "#") {
+          // Fallback if no source
+          alert(
+            "Add a song file to the 'assets' folder and update the src in final.html! 🎵",
+          );
+          return;
+        }
+
+        if (isPlaying) {
+          audio.pause();
+          playBtn.textContent = "▶";
+          songInfo.textContent = "Paused";
+        } else {
+          audio
+            .play()
+            .then(() => {
+              playBtn.textContent = "⏸";
+              songInfo.textContent = "Playing...";
+            })
+            .catch((e) => {
+              console.log("Audio play failed:", e);
+              alert(
+                "Please interact with the document first or check audio file path.",
+              );
+            });
+        }
+        isPlaying = !isPlaying;
+      });
+
+      // Flip card touch support
+      document.querySelectorAll(".flip-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          card.classList.toggle("flipped");
+        });
+      });
+
+      // Init Particles
       for (let i = 0; i < 20; i++) particles.push(new Particle());
 
       function animate() {
