@@ -748,8 +748,8 @@
         <div>Our Song 🎵</div>
         <div style="font-size: 0.7rem; opacity: 0.7">Click to Play</div>
       </div>
-      <audio id="bg-music" loop>
-        <source src="#" type="audio/mp3" />
+      <audio id="bg-music" loop autoplay>
+        <source src="music.mp3" type="audio/mp3" />
         <!-- User needs to add src -->
       </audio>
     </div>
@@ -857,38 +857,51 @@
       const playBtn = document.getElementById("play-btn");
       const audio = document.getElementById("bg-music");
       const songInfo = document.querySelector(".song-info div:last-child");
-      let isPlaying = false;
 
-      // Note: Auto-play usually blocked by browsers until interaction
-      playBtn.addEventListener("click", () => {
-        if (!audio.src || audio.src === window.location.href + "#") {
-          // Fallback if no source
-          alert(
-            "Add a song file to the 'assets' folder and update the src in final.html! 🎵",
-          );
-          return;
-        }
-
-        if (isPlaying) {
-          audio.pause();
-          playBtn.textContent = "▶";
-          songInfo.textContent = "Paused";
-        } else {
+      if (playBtn && audio) {
+        // 1. Try to autoplay on load
+        window.addEventListener("load", () => {
           audio
             .play()
             .then(() => {
               playBtn.textContent = "⏸";
               songInfo.textContent = "Playing...";
             })
-            .catch((e) => {
-              console.log("Audio play failed:", e);
-              alert(
-                "Please interact with the document first or check audio file path.",
-              );
+            .catch(() => {
+              playBtn.textContent = "▶";
+              songInfo.textContent = "Click to Play";
             });
-        }
-        isPlaying = !isPlaying;
-      });
+        });
+
+        // 2. Play/Pause Toggle Button
+        playBtn.addEventListener("click", () => {
+          if (audio.paused) {
+            audio
+              .play()
+              .then(() => {
+                playBtn.textContent = "⏸";
+                songInfo.textContent = "Playing...";
+              })
+              .catch((e) => {
+                console.error("Play failed:", e);
+                songInfo.textContent = "Error";
+              });
+          } else {
+            audio.pause();
+            playBtn.textContent = "▶";
+            songInfo.textContent = "Paused";
+          }
+        });
+
+        // 3. Pause when tab/window is hidden
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden && !audio.paused) {
+            audio.pause();
+            playBtn.textContent = "▶";
+            songInfo.textContent = "Paused (Tab Hidden)";
+          }
+        });
+      }
 
       // Flip card touch support
       document.querySelectorAll(".flip-card").forEach((card) => {

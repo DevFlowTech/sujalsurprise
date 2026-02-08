@@ -330,22 +330,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const playBtn = document.getElementById("play-btn");
   const audio = document.getElementById("bg-music");
   const songInfo = document.querySelector(".song-info div:last-child");
-  let isPlaying = false;
 
   if (playBtn && audio) {
-    playBtn.addEventListener("click", () => {
-      if (!audio.src || audio.src === window.location.href + "#") {
-        alert(
-          "Add a song file to the 'assets' folder and update the src in index.html! 🎵",
-        );
-        return;
-      }
+    // 1. Try to autoplay on load
+    window.addEventListener("load", () => {
+      audio
+        .play()
+        .then(() => {
+          playBtn.textContent = "⏸";
+          songInfo.textContent = "Playing...";
+        })
+        .catch(() => {
+          playBtn.textContent = "▶";
+          songInfo.textContent = "Click to Play";
+        });
+    });
 
-      if (isPlaying) {
-        audio.pause();
-        playBtn.textContent = "▶";
-        songInfo.textContent = "Click to Play";
-      } else {
+    // 2. Play/Pause Toggle Button
+    playBtn.addEventListener("click", () => {
+      if (audio.paused) {
         audio
           .play()
           .then(() => {
@@ -353,13 +356,23 @@ document.addEventListener("DOMContentLoaded", () => {
             songInfo.textContent = "Playing...";
           })
           .catch((e) => {
-            console.log("Audio play failed:", e);
-            alert(
-              "Please interact with the document first or check audio file path.",
-            );
+            console.error("Play failed:", e);
+            songInfo.textContent = "Error";
           });
+      } else {
+        audio.pause();
+        playBtn.textContent = "▶";
+        songInfo.textContent = "Paused";
       }
-      isPlaying = !isPlaying;
+    });
+
+    // 3. Pause when tab/window is hidden
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && !audio.paused) {
+        audio.pause();
+        playBtn.textContent = "▶";
+        songInfo.textContent = "Paused (Tab Hidden)";
+      }
     });
   }
 });
