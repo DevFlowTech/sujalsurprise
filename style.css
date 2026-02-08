@@ -479,6 +479,52 @@ body {
   font-family: var(--font-comic);
   font-size: 0.9rem;
   padding-right: 10px;
+}
+
+/* ==========================================================================
+   LANDING SCREEN (Tap to Enter)
+   ========================================================================== */
+.landing-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: var(--soft-pink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+}
+
+.landing-content {
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+
+.landing-title {
+  font-family: var(--font-comic);
+  font-size: 2.5rem;
+  color: var(--white);
+  text-shadow: 4px 4px 0px var(--comic-black);
+  margin-bottom: 20px;
+}
+
+.landing-subtitle {
+  font-size: 1.2rem;
+  color: var(--comic-black);
+  font-weight: 700;
+  background: var(--white);
+  padding: 10px 20px;
+  border: var(--chunky-border);
+  border-radius: 20px;
+  box-shadow: var(--bubble-shadow);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 } 
  
  

@@ -13,12 +13,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const bearImg = document.getElementById("bear-img");
   const introTitle = document.getElementById("intro-title");
+
   const introSubtitle = document.getElementById("intro-subtitle");
+
+  // Landing Screen
+  const landingScreen = document.querySelector(".landing-screen");
 
   // Overlays
   const quizOverlay = document.getElementById("quiz-overlay");
   const letterOverlay = document.getElementById("letter-overlay");
   const photoOverlay = document.getElementById("photo-wall-overlay");
+
+  /* ==========================================================================
+     0. LANDING SCREEN LOGIC
+     ========================================================================== */
+  if (landingScreen) {
+    landingScreen.addEventListener("click", () => {
+      // 1. Play Music
+      const audio = document.getElementById("bg-music");
+      if (audio) {
+        audio.play().catch((e) => console.log("Audio play failed", e));
+        const playBtn = document.getElementById("play-btn");
+        const songInfo = document.querySelector(".song-info div:last-child");
+        if (playBtn) playBtn.textContent = "⏸";
+        if (songInfo) songInfo.textContent = "Playing...";
+      }
+
+      // 2. Hide Screen
+      landingScreen.style.opacity = "0";
+      setTimeout(() => {
+        landingScreen.remove();
+      }, 500);
+    });
+  }
 
   /* ==========================================================================
      1. INTRO SCREEN LOGIC (Multi-Stage)
@@ -58,6 +85,17 @@ document.addEventListener("DOMContentLoaded", () => {
       introYesBtn.textContent = "YES, OKAY! I LOVE YOU! ❤️";
     }
     introYesBtn.style.zIndex = "1000";
+
+    // Also try to play music if user interacts here
+    if (audio.paused) {
+      audio
+        .play()
+        .then(() => {
+          playBtn.textContent = "⏸";
+          songInfo.textContent = "Playing...";
+        })
+        .catch((e) => console.log("User interaction needed"));
+    }
   });
 
   // Yes button starts the journey
